@@ -37,7 +37,7 @@ BookManagementSystem is a Flask-based web application designed to manage books, 
 1. Clone the repository:
 
    ```bash
-    git clone <repository_url>
+    git clone https://github.com/MokhlesHussain/BookManagementSystem.git
     cd BookManagementSystem
 
 2. Create and activate a virtual environment:

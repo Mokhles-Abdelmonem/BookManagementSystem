@@ -22,9 +22,11 @@ def create_app(config_class=Config):
     }
 
     api = Api(
-        title='My Title',
+        title='Book Management System',
         version='1.0',
-        description='A description',
+        description='Flask-based web application designed to manage books, user accounts, '
+                    'authentication and interactions such as wishlist and liked books,'
+                    ' using pydantic as a validation tool for equest and response formats',
         authorizations=authorizations,
         security='Bearer Auth'
     )
