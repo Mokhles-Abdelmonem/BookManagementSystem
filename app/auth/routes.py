@@ -18,7 +18,7 @@ class UserLogin(Resource):
     @validate(request_model=UserLoginSchema)
     @api.expect(login_model)
     @api.doc("login")
-    def post(self):
+    def post(self, **kwargs):
         data = request.get_json()
         user = User.query.filter_by(email=data['email']).first()
 
@@ -39,7 +39,7 @@ class RefreshToken(Resource):
     @validate()
     @jwt_required(refresh=True)
     @api.doc("refresh")
-    def post(self):
+    def post(self, **kwargs):
         current_user = get_jwt_identity()
         user = User.query.get(current_user)
         refresh_token_jti = get_jwt()['jti']
@@ -55,7 +55,7 @@ class UserLogout(Resource):
     @validate()
     @jwt_required()
     @api.doc("logout")
-    def post(self):
+    def post(self, **kwargs):
         jti = get_jwt()['jti']
         db.session.add(TokenBlocklist(jti=jti))
         db.session.commit()

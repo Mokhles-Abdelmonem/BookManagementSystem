@@ -15,7 +15,7 @@ class BookList(Resource):
 
     @validate(response_model=BookSchemaOut, is_list=True)
     @api.doc("get_books")
-    def get(self):
+    def get(self, **kwargs):
         books = Book.query.all()
         return books
 
@@ -23,7 +23,7 @@ class BookList(Resource):
     @jwt_required()
     @api.doc("add_book")
     @api.expect(book_schema_no_id)
-    def post(self):
+    def post(self, **kwargs):
         data = request.get_json()
         existing_book = Book.query.filter_by(title=data['title']).first()
         if existing_book:
@@ -50,7 +50,7 @@ class BookResource(Resource):
 
     @validate(response_model=BookSchemaOut)
     @api.doc("get_book")
-    def get(self, pk):
+    def get(self, pk, **kwargs):
         book = Book.query.get(pk)
         if not book:
             abort(404, 'Book not found')
@@ -60,7 +60,7 @@ class BookResource(Resource):
     @jwt_required()
     @api.doc("update_book")
     @api.expect(book_schema_no_id)
-    def put(self, pk):
+    def put(self, pk, **kwargs):
         book = Book.query.get(pk)
         if not book:
             abort(404, 'Book not found')
@@ -75,7 +75,7 @@ class BookResource(Resource):
     @jwt_required()
     @api.doc("delete_book")
     @api.response(204, 'Book deleted')
-    def delete(self, pk):
+    def delete(self, pk, **kwargs):
         book = Book.query.get(pk)
         if not book:
             abort(404, 'Book not found')
@@ -89,7 +89,7 @@ class UserWishlist(Resource):
     @jwt_required()
     @api.doc("get_wishlist")
     @validate(response_model=BookSchemaOut)
-    def get(self):
+    def get(self, **kwargs):
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         return user.to_dict()['wishlist']
@@ -97,7 +97,7 @@ class UserWishlist(Resource):
     @jwt_required()
     @api.expect(api.model('BookId', {'book_id': fields.Integer(required=True)}))
     @api.doc("add_to_wishlist")
-    def post(self):
+    def post(self, **kwargs):
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         data = request.get_json()
@@ -116,7 +116,7 @@ class UserWishlist(Resource):
     @jwt_required()
     @api.expect(api.model('BookId', {'book_id': fields.Integer(required=True)}))
     @api.doc("remove_from_wishlist")
-    def delete(self):
+    def delete(self, **kwargs):
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         data = request.get_json()
@@ -135,7 +135,7 @@ class UserLikedBooks(Resource):
     @jwt_required()
     @api.doc("get_liked_books")
     @validate(response_model=BookSchemaOut)
-    def get(self):
+    def get(self, **kwargs):
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         return user.to_dict()['liked_books']
@@ -143,7 +143,7 @@ class UserLikedBooks(Resource):
     @jwt_required()
     @api.expect(api.model('BookId', {'book_id': fields.Integer(required=True)}))
     @api.doc("add_to_liked_books")
-    def post(self):
+    def post(self, **kwargs):
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         data = request.get_json()
@@ -161,7 +161,7 @@ class UserLikedBooks(Resource):
     @jwt_required()
     @api.expect(api.model('BookId', {'book_id': fields.Integer(required=True)}))
     @api.doc("remove_from_liked_books")
-    def delete(self):
+    def delete(self, **kwargs):
         user_id = get_jwt_identity()
         user = User.query.get(user_id)
         data = request.get_json()

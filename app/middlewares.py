@@ -19,7 +19,7 @@ def validate(request_model=None, response_model=None, is_list: bool = False):
                         # Validate the incoming request data
                         request_data = request.get_json()
                         validated_request = request_model(**request_data)
-
+                        kwargs['request_model'] = validated_request
                     except ValidationError as e:
                         return {"error": e.errors(include_url=False, include_input=False)}, 400
 
