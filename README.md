@@ -51,18 +51,27 @@ BookManagementSystem is a Flask-based web application designed to manage books, 
    ```bash
     pip install -r requirements.txt
 
-4. Set up the database:
+4. Export flask app:
+
+   ```bash
+    export FLASK_APP=manage.py
+
+5. Set up the database:
 
    ```bash
     flask db init
     flask db migrate
     flask db upgrade
 
-5. Run the application:
+6. Run the application:
 
    ```bash
    flask run
-
+   ```
+   or
+7. ```bash
+   python manage.py
+   ```
 ### The application should now be running at http://localhost:5000.
 
 
